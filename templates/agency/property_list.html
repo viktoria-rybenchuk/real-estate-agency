@@ -1,9 +1,14 @@
 {% extends "base.html" %}
 	{% block sidebar %}
+		<form action="" method="get">
+		{{ search_form.as_p }}
+			<input type="submit" value="search">
+		</form>
 		{% for property in property_list %}
-			{{ property.title }}
-			{{ property.price }}
-			{{ property.area }}
+			<li>{{ property.title }} {{ property.price }} {{ property.area }}</li>
+
+
+
 
 		{% endfor %}
 
