@@ -24,6 +24,13 @@ class Area(models.Model):
         blank=True
     )
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["name"], name="unique_name_of_area"
+            )
+        ]
+
 
 class Property(models.Model):
     title = models.CharField(max_length=63)
