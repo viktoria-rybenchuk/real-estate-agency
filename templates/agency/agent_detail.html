@@ -4,9 +4,14 @@
 	<p>{{ agent.properties }}</p>
 	{% for area in agent.areas.all %}
 		<p>Working area: {{ area.name }}</p>
+
+	{%if user.id == agent.id %}
 		<p>Clients:</p>
 		{% for client in area.clients.all %}
 			<p>{{ client.first_name }}</p>
+
+				{{ client.phone_number }}
 		{% endfor %}
+		{% endif %}
 	{% endfor %}
 {% endblock %}
