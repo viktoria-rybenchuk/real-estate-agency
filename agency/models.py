@@ -30,6 +30,8 @@ class Area(models.Model):
                 fields=["name"], name="unique_name_of_area"
             )
         ]
+    def __str__(self) -> str:
+        return self.name
 
 
 class Property(models.Model):
