@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+	<a href="{% url 'agency:agent-create' %}">Create</a>
 	{% for agent in agent_list %}
 		<a href="{% url 'agency:agent-detail' pk=agent.pk%}">{{ agent.id }}</a>
 		<p>{{ agent.first_name }} {{ agent.last_name }} {{ agent.email }}</p>
