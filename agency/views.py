@@ -29,3 +29,6 @@ class AgentDetailView(DetailView):
 class PropertyListView(ListView):
     model = Property
     queryset = Property.objects.select_related("area")
+
+class PropertyDetail(DetailView):
+    model = property
