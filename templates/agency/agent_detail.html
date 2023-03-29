@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 	<p>Agent: {{ agent.first_name }} {{ agent.last_name }}</p>
+	<p>{{ agent.properties }}</p>
 	{% for area in agent.areas.all %}
 		<p>Working area: {{ area.name }}</p>
 		<p>Clients:</p>
