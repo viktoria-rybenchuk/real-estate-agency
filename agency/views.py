@@ -2,9 +2,9 @@ from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
-from agency.forms import PropertySearchForm
+from agency.forms import PropertySearchForm, AgentCreationForm
 from agency.models import Agent, Property, Client, Area
 
 
@@ -50,3 +50,8 @@ class PropertyListView(ListView):
 
 class PropertyDetail(DetailView):
     model = property
+
+class AgentCreateView(CreateView):
+    model = Agent
+    form_class = AgentCreationForm
+    success_url = reverse_lazy("agency:agent-list")
