@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+	{% block sidebar %}
+		{% for property in property_list %}
+			{{ property.title }}
+			{{ property.price }}
+			{{ property.area }}
+
+		{% endfor %}
+
+	{% endblock %}

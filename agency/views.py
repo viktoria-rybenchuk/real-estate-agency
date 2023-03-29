@@ -21,8 +21,11 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class AgentListView(ListView):
     model = Agent
-    queryset = Agent.objects.all()
 
 
 class AgentDetailView(DetailView):
     model = Agent
+
+class PropertyListView(ListView):
+    model = Property
+    queryset = Property.objects.select_related("area")
