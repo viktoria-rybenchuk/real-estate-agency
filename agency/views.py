@@ -51,7 +51,12 @@ class PropertyListView(ListView):
 class PropertyDetail(DetailView):
     model = property
 
+
 class AgentCreateView(CreateView):
     model = Agent
     form_class = AgentCreationForm
     success_url = reverse_lazy("agency:agent-list")
+
+
+class AreaListView(ListView):
+    model = Area
