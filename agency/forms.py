@@ -1,4 +1,13 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
+from agency.models import Agent
+
+
+class AgentCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = Agent
+        fields = ("username", "first_name", "last_name", "email")
 
 
 class PropertySearchForm(forms.Form):
@@ -7,5 +16,5 @@ class PropertySearchForm(forms.Form):
         required=False,
         label="",
         widget=forms.TextInput(attrs=
-            {"placeholder": "Search by title"})
+                               {"placeholder": "Search by title"})
     )
