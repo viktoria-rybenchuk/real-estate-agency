@@ -35,12 +35,14 @@ class AgentDetailView(DetailView):
         counter = agent.areas.filter(clients__is_searching_for_property=False).count()
         deal += counter
         context["num_deals"] = deal
+
         return context
 
 
 class PropertyListView(ListView):
     model = Property
     queryset = Property.objects.select_related("area")
+
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
@@ -58,7 +60,9 @@ class PropertyListView(ListView):
 
 
 class PropertyDetail(DetailView):
-    model = property
+    model = Property
+
+
 
 
 class AgentCreateView(CreateView):

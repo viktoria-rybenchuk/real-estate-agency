@@ -52,6 +52,12 @@ class Property(models.Model):
         blank=True,
         null=True
     )
+    agent = models.ForeignKey(
+        Agent,
+        on_delete=models.CASCADE,
+        related_name="properties",
+        blank=True,
+        null=True)
 
     class Meta:
         verbose_name_plural = "properties"
@@ -70,7 +76,8 @@ class Client(models.Model):
     search_area = models.ForeignKey(
         Area,
         on_delete=models.CASCADE,
-        related_name="clients"
+        related_name="clients",
+        null=True
     )
 
     def __str__(self) -> str:

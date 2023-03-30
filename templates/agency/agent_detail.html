@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 	<p>Agent: {{ agent.first_name }} {{ agent.last_name }}</p>
-	<p>{{ agent.properties }}</p>
-		<h1>Successful deal {{ num_deals }}</h1>
-		{%if user.id == agent.id %}
+	{% if agent.properties.all %}
+    {% for property in agent.properties.all %}
+        <p>{{ property.title }}</p>
+    {% endfor %}
+	{% else %}
+    <p>No properties found for this agent.</p>
+	{% endif %}
 
+
+
+		{%if user.id == agent.id %}
+		<h1>Successful deal {{ num_deals }}</h1>
 		<p>Clients:</p>
 	{% for area in agent.areas.all %}
 		{% for client in area.clients.all %}

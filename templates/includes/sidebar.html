@@ -3,7 +3,8 @@
 		<li><a href="{% url 'logout' %}">Log out</a></li>
 	{% else %}
 		<li><a href="{% url 'login' %}">Log in</a></li>
-	{% endif %} 
+	{% endif %}
+
 
 	<li><a href="{% url "agency:index" %}">Home</a></li>
 	<li><a href="{% url "agency:agent-list" %}">Agents</a></li>
