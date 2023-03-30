@@ -1,16 +1,82 @@
 {% extends "base.html" %}
-	{% block sidebar %}
+{% load crispy_forms_filters %}
+{% load static %}
+{#	{% block sidebar %}#}
+{#		<form action="" method="get">#}
+{#		{{ search_form.as_p }}#}
+{#			<input type="submit" value="search">#}
+{#		</form>#}
+{#		{% for property in property_list %}#}
+{#			<li><a href="{% url "agency:property-detail" pk=property.id%}">{{ property.title }}</a> {{ property.price }} {{ property.area }}</li>#}
+{##}
+{##}
+{##}
+{##}
+{##}
+{#		{% endfor %}#}
+{##}
+{#	{% endblock %}#}
+{% block sidebar %}
 		<form action="" method="get">
-		{{ search_form.as_p }}
+		{{ search_form|crispy}}
 			<input type="submit" value="search">
 		</form>
-		{% for property in property_list %}
-			<li><a href="{% url "agency:property-detail" pk=property.id%}">{{ property.title }}</a> {{ property.price }} {{ property.area }}</li>
+{% endblock %}
+{% block content %}
 
-
-
-
-
-		{% endfor %}
-
-	{% endblock %}
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4 bg-primary">
+          <h6 class="text-white text-capitalize ps-3">All properties</h6>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card-body px-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table table-striped table-hover align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 25%;">Address</th>
+                  <th class="text-uppercase text-secondary text-start font-weight-bolder opacity-7 ps-2" style="width: 20%;">Area</th>
+                  <th class="text-center text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 15%;">Type</th>
+                  <th class="text-center text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 10%;">Available</th>
+                  <th class="text-center text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 20%;">Date</th>
+                  <th class="text-center text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 10%;">Price</th>
+                  <th class="text-center text-uppercase text-secondary text-start font-weight-bolder opacity-7" style="width: 10%;">Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for property in property_list %}
+                  <tr>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.address}}</span>
+                    </td>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.area}}</span>
+                    </td>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.property_type}}</span>
+                    </td>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.is_available}}</span>
+                    </td>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.created_at }}</span>
+                    </td>
+                    <td class="align-middle text-start">
+                      <span class="text-secondary text-xs font-weight-bold">{{ property.price }}</span>
+                    </td>
+                    <td class="lign-middle text-start">
+                      <a href="{% url "agency:property-detail" pk=property.id %}" class="btn btn-primary">Detail</a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,31 +1,163 @@
+{#{% extends "base.html" %}#}
+{#{% block content %}#}
+{#	<p>Agent: {{ agent.first_name }} {{ agent.last_name }}</p>#}
+{#	{% if agent.properties.all %}#}
+{#    {% for property in agent.properties.all %}#}
+{#        <p>{{ property.title }}</p>#}
+{#    {% endfor %}#}
+{#	{% else %}#}
+{#    <p>No properties found for this agent.</p>#}
+{#	{% endif %}#}
+{##}
+{##}
+{##}
+{#		{%if user.id == agent.id %}#}
+{#		<h1>Successful deal {{ num_deals }}</h1>#}
+{#		<p>Clients:</p>#}
+{#	{% for area in agent.areas.all %}#}
+{#		{% for client in area.clients.all %}#}
+{#			<p>{{ client.first_name }}</p>#}
+{#			<p>{{ client.last_name }}</p>#}
+{#			<p>{{ client.email }}</p>#}
+{#			<p>{{ client.additional_info }}</p>#}
+{#			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>#}
+{#				<br>#}
+{##}
+{#		{% endfor %}#}
+{##}
+{##}
+{#	{% endfor %}#}
+{#	{% endif %}#}
+{#{% endblock %}#}
 {% extends "base.html" %}
+
+
+
+
 {% block content %}
-	<p>Agent: {{ agent.first_name }} {{ agent.last_name }}</p>
-	{% if agent.properties.all %}
-    {% for property in agent.properties.all %}
-        <p>{{ property.title }}</p>
-    {% endfor %}
-	{% else %}
-    <p>No properties found for this agent.</p>
-	{% endif %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<h2>Agent: {{ agent.first_name }} {{ agent.last_name }}</h2>
+			{% if agent.properties.all %}
+				<h3>Properties:</h3>
+			    <table class="table table-striped">
+			        <thead>
+			            <tr>
+			                <th>Title</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        {% for property in agent.properties.all %}
+			            <tr>
+			                <td>{{ property.title }}</td>
+			            </tr>
+			        {% endfor %}
+			        </tbody>
+			    </table>
+			{% else %}
+			    <p>No properties found for this agent.</p>
+			{% endif %}
+		</div>
+		{% if user.id == agent.id %}
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					<h3>Successful deals: {{ num_deals }}</h3>
+				</div>
+				<div class="card-body">
+					<h4>Clients:</h4>
+					<table class="table table-striped">
+				        <thead>
+				            <tr>
+				                <th>First Name</th>
+				                <th>Last Name</th>
+				                <th>Email</th>
+				                <th>Additional Info</th>
+				                <th>Action</th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        {% for area in agent.areas.all %}
+					        {% for client in area.clients.all %}
+					            <tr>
+					                <td>{{ client.first_name }}</td>
+					                <td>{{ client.last_name }}</td>
+					                <td>{{ client.email }}</td>
+					                <td>{{ client.additional_info }}</td>
+					                <td><a href="{% url 'agency:client-update' pk=client.pk %}" class="btn btn-sm btn-primary">Edit</a></td>
+					            </tr>
+					        {% endfor %}
+				        {% endfor %}
+				        </tbody>
+				    </table>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+	</div>
+
+	<!-- New code: wrap both tables in a single div -->
+	<div class="row">
+		<div class="col-md-12">
+			<h4>Properties and Clients:</h4>
+			<div class="table-responsive">
+				<table class="table table-striped">
+			        <thead>
+			            <tr>
+			                <th>Title</th>
+			                <th>Client First Name</th>
+			                <th>Client Last Name</th>
+			                <th>Client Email</th>
+			                <th>Client Additional Info</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	{% for property in agent.properties.all %}
+			        	{% for client in property.clients.all %}
+			            <tr>
+			                <td>{{ property.title }}</td>
+			                <td>{{ client.first_name }}</td>
+			                <td>{{ client.last_name }}</td>
+			                <td>{{ client.email }}</td>
+			                <td>{{ client.additional_info }}</td>
+			            </tr>
+			            {% endfor %}
+			            {% endfor %}
+			        </tbody>
+			    </table>
+			</div>
+		</div>
+	</div>
+</div>
+	<style>
+	/* Additional CSS styles */
+h2, h3, h4, h5 {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.card-header {
+	background-color: #007bff;
+	color: #fff;
+}
+.card-body {
+	padding: 20px;
+}
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+}
+.btn-primary:hover {
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+.table-responsive {
+	overflow-x: auto;
+}
+
+	</style>
 
 
 
-		{%if user.id == agent.id %}
-		<h1>Successful deal {{ num_deals }}</h1>
-		<p>Clients:</p>
-	{% for area in agent.areas.all %}
-		{% for client in area.clients.all %}
-			<p>{{ client.first_name }}</p>
-			<p>{{ client.last_name }}</p>
-			<p>{{ client.email }}</p>
-			<p>{{ client.additional_info }}</p>
-			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>
-				<br>
 
-		{% endfor %}
-
-
-	{% endfor %}
-	{% endif %}
 {% endblock %}
