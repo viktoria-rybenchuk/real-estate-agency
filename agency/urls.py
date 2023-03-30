@@ -6,7 +6,9 @@ from agency.views import (
     AgentDetailView,
     PropertyListView,
     PropertyDetail,
-    AgentCreateView, AreaListView
+    AgentCreateView,
+    AreaListView,
+    CreateClientView
 )
 
 urlpatterns = [
@@ -16,7 +18,8 @@ urlpatterns = [
     path("agents/create/", AgentCreateView.as_view(), name="agent-create"),
     path("properties/", PropertyListView.as_view(), name="property-list"),
     path("properties/<int:pk>/detail/", PropertyDetail.as_view(), name="property-detail"),
-    path("areas/", AreaListView.as_view(), name="area-list")
+    path("areas/", AreaListView.as_view(), name="area-list"),
+    path("clients/", CreateClientView.as_view(), name="client-create")
 
 ]
 

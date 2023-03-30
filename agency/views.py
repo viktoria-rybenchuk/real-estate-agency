@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 
-from agency.forms import PropertySearchForm, AgentCreationForm
+from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm
 from agency.models import Agent, Property, Client, Area
 
 
@@ -73,7 +73,7 @@ class AgentCreateView(CreateView):
 
 class AreaListView(ListView):
     model = Area
-agent = Agent.objects.get(pk=1)
+
 
 # def succesfful_deal(pk):
 #     agent = Agent.objects.get(id=pk)
@@ -83,3 +83,7 @@ agent = Agent.objects.get(pk=1)
 #         area.clients.remove(*clients)
 #     return counter
 #
+class CreateClientView(CreateView):
+    model = Client
+    form_class = ClientCreationForm
+    success_url = reverse_lazy("agency:index")
