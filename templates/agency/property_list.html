@@ -5,7 +5,8 @@
 			<input type="submit" value="search">
 		</form>
 		{% for property in property_list %}
-			<li>{{ property.title }} {{ property.price }} {{ property.area }}</li>
+			<li><a href="{% url "agency:property-detail" pk=property.id%}">{{ property.title }}</a> {{ property.price }} {{ property.area }}</li>
+
 
 
 
