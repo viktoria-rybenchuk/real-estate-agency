@@ -28,6 +28,15 @@ class AgentListView(ListView):
 class AgentDetailView(DetailView):
     model = Agent
 
+    def get_context_data(self, **kwargs):
+        agent = Agent.objects.get(id=self.request.user.id)
+        context = super().get_context_data(**kwargs)
+        deal = self.request.GET.get("num_deals", 0)
+        counter = agent.areas.filter(clients__is_searching_for_property=False).count()
+        deal += counter
+        context["num_deals"] = deal
+        return context
+
 
 class PropertyListView(ListView):
     model = Property
@@ -60,3 +69,13 @@ class AgentCreateView(CreateView):
 
 class AreaListView(ListView):
     model = Area
+agent = Agent.objects.get(pk=1)
+
+# def succesfful_deal(pk):
+#     agent = Agent.objects.get(id=pk)
+#     counter = agent.areas.filter(clients__is_searching_for_property=False).count()
+#     for area in agent.areas.all():
+#         clients = area.clients.filter(is_searching_for_property=False)
+#         area.clients.remove(*clients)
+#     return counter
+#
