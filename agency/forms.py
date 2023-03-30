@@ -4,6 +4,9 @@ from django.core.exceptions import ValidationError
 
 from agency.models import Agent, Client
 
+PHONE_CODE_COUNTRY = "+44"
+LENGH_PHONE_NUMBER = 11
+
 
 class AgentCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -31,7 +34,7 @@ class ClientCreationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['phone_number'].initial = '+44'
+        self.fields['phone_number'].initial = PHONE_CODE_COUNTRY
 
     class Meta:
         model = Client
@@ -43,10 +46,13 @@ class ClientCreationForm(forms.ModelForm):
 
 def validate_phone_number(phone_number: str) -> str:
     phone_number = phone_number.replace(" ", "")
-    if phone_number[:3] != "+44":
-        raise ValidationError("Phone number should consist code of country")
-    if len(phone_number) != 5:
-        raise ValidationError("Phone number should consist 11 numbers")
+    if phone_number[:3] != PHONE_CODE_COUNTRY:
+        raise ValidationError(
+            f"Phone number should consist phone "
+            f"code of country {PHONE_CODE_COUNTRY}"
+        )
+    if len(phone_number) != LENGH_PHONE_NUMBER:
+        raise ValidationError(f"Phone number should consist {LENGH_PHONE_NUMBER} numbers")
     elif not phone_number[1:].isdigit():
         raise ValidationError("Phone number should consist digit")
     return phone_number
