@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 PROPERTY_TYPE_CHOICES = (
     ('House', 'House'),
@@ -79,7 +80,7 @@ class Client(models.Model):
         related_name="clients",
         null=True
     )
-    Additional_info = models.TextField(blank=True)
+    additional_info = models.TextField(blank=True)
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"

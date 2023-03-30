@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.urls import reverse_lazy
 
 from agency.models import Agent, Client
 
@@ -12,6 +13,12 @@ class AgentCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Agent
         fields = ("username", "first_name", "last_name", "email")
+class ClientUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = ["additional_info"]
+
+
 
 
 class PropertySearchForm(forms.Form):

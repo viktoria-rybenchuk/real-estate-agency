@@ -19,6 +19,8 @@
 			<p>{{ client.first_name }}</p>
 			<p>{{ client.last_name }}</p>
 			<p>{{ client.email }}</p>
+			<p>{{ client.additional_info }}</p>
+			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>
 				<br>
 
 		{% endfor %}

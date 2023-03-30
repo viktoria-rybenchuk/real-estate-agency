@@ -1,10 +1,10 @@
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm
+from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm
 from agency.models import Agent, Property, Client, Area
 
 
@@ -83,7 +83,15 @@ class AreaListView(ListView):
 #         area.clients.remove(*clients)
 #     return counter
 #
-class CreateClientView(CreateView):
+class ClientCreateView(CreateView):
     model = Client
     form_class = ClientCreationForm
     success_url = reverse_lazy("agency:index")
+class ClientUpdateView(UpdateView):
+    model = Client
+    form_class = ClientUpdateForm
+    template_name = "agency/agent_form.html"
+
+    def get_success_url(self):
+        agent = self.request.user
+        return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
