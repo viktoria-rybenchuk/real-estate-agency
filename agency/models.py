@@ -15,7 +15,8 @@ class Agent(AbstractUser):
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"
 
-
+    def get_absolute_url(self):
+        return reverse("agency:agent-detail", kwargs={"pk": self.pk})
 class Area(models.Model):
     name = models.CharField(max_length=60)
     agent = models.ForeignKey(
