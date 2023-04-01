@@ -5,29 +5,61 @@ from django.db.models.functions import TruncMonth, ExtractMonth
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm
 from agency.models import Agent, Property, Client, Area, Deal
-#
-def count_deal():
-    # Deal.objects.create(deal="j", agent_id=1)
-    deals =  Deal.objects.annotate(month=TruncMonth('date')).values('month').annotate(sum=Count('deal')).order_by('month')
-    numbers = [x for x in deals]
-    print(numbers)
-    return deals
-print(count_deal())
-def index(request: HttpRequest) -> HttpResponse:
-    labels = ["Apr", "May", "Jun", "Jul"]
-    labels = json.dumps(labels)
 
+MONTHS = {
+    1: "Jan",
+    2: "Feb",
+    3: "Mar",
+    4: "Apr",
+    5: "May",
+    6: "Jun",
+    7: "Jul",
+    8: "Aug",
+    9: "Sep",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec"
+}
+
+CURRENT_YEAR = datetime.now().year
+
+
+#
+def get_deals_per_month() -> dict:
+    deals = Deal.objects.filter(date__year=CURRENT_YEAR).annotate(
+        month=TruncMonth("date")
+    ).values("month").annotate(
+        sum=Count("deal")).order_by("month")
+    deal_list = [sum_deal["sum"] for sum_deal in deals]
+    month_list = [
+        MONTHS.get(date.month) for date in deals.values_list("month", flat=True)
+    ]
+    data = {
+        "month": month_list,
+        "count_deals": deal_list
+    }
+    return data
+
+
+print(get_deals_per_month())
+
+
+def index(request: HttpRequest) -> HttpResponse:
+    monthly_deals = get_deals_per_month().get("count_deals")
+    month = get_deals_per_month()["month"]
     count_area = Area.objects.count()
     count_agent = Agent.objects.count()
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
     context = {
-        "month": [1, 5, 8, 10, 200],
-        "labels": labels,
+        "month": month,
+        "monthly_deals": monthly_deals,
+        "current_year": CURRENT_YEAR,
         "count_agent": count_agent,
         "clients_found_home": clients_found_home,
         "count_area": count_area,
@@ -57,7 +89,6 @@ class PropertyListView(ListView):
     model = Property
     queryset = Property.objects.select_related("area")
 
-
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
         title = self.request.GET.get("title", "")
@@ -75,8 +106,6 @@ class PropertyListView(ListView):
 
 class PropertyDetail(DetailView):
     model = Property
-
-
 
 
 class AgentCreateView(CreateView):
@@ -101,6 +130,8 @@ class ClientCreateView(CreateView):
     model = Client
     form_class = ClientCreationForm
     success_url = reverse_lazy("agency:index")
+
+
 class ClientUpdateView(UpdateView):
     model = Client
     form_class = ClientUpdateForm
