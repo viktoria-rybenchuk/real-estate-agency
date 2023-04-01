@@ -21,6 +21,9 @@ class Deal(models.Model):
     deal = models.CharField(max_length=63)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, blank=False)
     date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.deal} {self.agent} {self.date}"
 class Area(models.Model):
     name = models.CharField(max_length=60)
     agent = models.ForeignKey(

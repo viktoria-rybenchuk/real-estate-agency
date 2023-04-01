@@ -1,4 +1,6 @@
-from django.db.models import QuerySet, Count
+import json
+
+from django.db.models import QuerySet, Count, Sum
 from django.db.models.functions import TruncMonth, ExtractMonth
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -9,19 +11,23 @@ from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationFo
 from agency.models import Agent, Property, Client, Area, Deal
 #
 def count_deal():
-    Deal.objects.create(deal="j", agent_id=1)
-    deals = Deal.objects.filter(date__month=4)
+    # Deal.objects.create(deal="j", agent_id=1)
+    deals =  Deal.objects.annotate(month=TruncMonth('date')).values('month').annotate(sum=Count('deal')).order_by('month')
+    numbers = [x for x in deals]
+    print(numbers)
     return deals
 print(count_deal())
 def index(request: HttpRequest) -> HttpResponse:
-
+    labels = ["Apr", "May", "Jun", "Jul"]
+    labels = json.dumps(labels)
 
     count_area = Area.objects.count()
     count_agent = Agent.objects.count()
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
     context = {
-        ""
+        "month": [1, 5, 8, 10, 200],
+        "labels": labels,
         "count_agent": count_agent,
         "clients_found_home": clients_found_home,
         "count_area": count_area,
