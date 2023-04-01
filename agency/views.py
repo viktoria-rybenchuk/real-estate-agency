@@ -1,22 +1,30 @@
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Count
+from django.db.models.functions import TruncMonth, ExtractMonth
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm
-from agency.models import Agent, Property, Client, Area
-
-
+from agency.models import Agent, Property, Client, Area, Deal
+#
+def count_deal():
+    Deal.objects.create(deal="j", agent_id=1)
+    deals = Deal.objects.filter(date__month=4)
+    return deals
+print(count_deal())
 def index(request: HttpRequest) -> HttpResponse:
+
+
     count_area = Area.objects.count()
     count_agent = Agent.objects.count()
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
     context = {
+        ""
         "count_agent": count_agent,
         "clients_found_home": clients_found_home,
-        "count_area": count_area
+        "count_area": count_area,
     }
     return render(request, "agency/index.html", context)
 

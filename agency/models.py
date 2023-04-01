@@ -17,6 +17,10 @@ class Agent(AbstractUser):
 
     def get_absolute_url(self):
         return reverse("agency:agent-detail", kwargs={"pk": self.pk})
+class Deal(models.Model):
+    deal = models.CharField(max_length=63)
+    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, blank=False)
+    date = models.DateField(auto_now_add=True)
 class Area(models.Model):
     name = models.CharField(max_length=60)
     agent = models.ForeignKey(
