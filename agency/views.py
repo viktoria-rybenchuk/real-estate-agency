@@ -43,7 +43,7 @@ def get_deals_per_month() -> dict:
     return data
 
 
-def get_best_worker_of_month():
+def get_best_worker_of_month() -> dict:
     previous_month = datetime.now().month - 1
     max_result = Deal.objects.filter(
         date__month=previous_month).values(
@@ -55,10 +55,8 @@ def get_best_worker_of_month():
     full_name_worker = f"{agent.first_name} {agent.last_name}"
     return {
         "agent": full_name_worker,
-        "max_deals":  max_result["count_deal"]
+        "max_deals": max_result["count_deal"]
     }
-
-print(get_best_worker_of_month())
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -67,17 +65,18 @@ def index(request: HttpRequest) -> HttpResponse:
     best_worker = get_best_worker_of_month().get("agent")
     max_deals = get_best_worker_of_month().get("max_deals")
     count_area = Area.objects.count()
-    count_agent = Agent.objects.count()
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
+    active_client = Client.objects.filter(
+        is_searching_for_property=True).count()
     context = {
         "best_worker": best_worker,
         "max_deals": max_deals,
         "month": month,
         "monthly_deals": monthly_deals,
         "current_year": CURRENT_YEAR,
-        "count_agent": count_agent,
         "clients_found_home": clients_found_home,
+        "active_client": active_client,
         "count_area": count_area,
     }
     return render(request, "agency/index.html", context)
@@ -85,6 +84,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class AgentListView(ListView):
     model = Agent
+    paginate_by = 10
 
 
 class AgentDetailView(DetailView):
@@ -104,6 +104,7 @@ class AgentDetailView(DetailView):
 class PropertyListView(ListView):
     model = Property
     queryset = Property.objects.select_related("area")
+    paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
