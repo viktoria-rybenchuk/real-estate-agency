@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy
 
 from agency.models import Agent, Client
 
@@ -13,12 +12,12 @@ class AgentCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Agent
         fields = ("username", "first_name", "last_name", "email")
+
+
 class ClientUpdateForm(forms.ModelForm):
     class Meta:
         model = Client
         fields = ["additional_info"]
-
-
 
 
 class PropertySearchForm(forms.Form):
@@ -30,6 +29,7 @@ class PropertySearchForm(forms.Form):
                                {"placeholder": "Search by title"})
     )
 
+
 class AgentSearchForm(forms.Form):
     last_name = forms.CharField(
         max_length=60,
@@ -38,6 +38,8 @@ class AgentSearchForm(forms.Form):
         widget=forms.TextInput(attrs=
                                {"placeholder": "Search by last name"})
     )
+
+
 class ClientCreationForm(forms.ModelForm):
     phone_number = forms.CharField(
         max_length=20,
@@ -46,7 +48,7 @@ class ClientCreationForm(forms.ModelForm):
         )
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.fields['phone_number'].initial = PHONE_CODE_COUNTRY
 

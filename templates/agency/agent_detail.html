@@ -1,35 +1,3 @@
-{#{% extends "base.html" %}#}
-{#{% block content %}#}
-{#	<p>Agent: {{ agent.first_name }} {{ agent.last_name }}</p>#}
-{#	{% if agent.properties.all %}#}
-{#    {% for property in agent.properties.all %}#}
-{#        <p>{{ property.title }}</p>#}
-{#    {% endfor %}#}
-{#	{% else %}#}
-{#    <p>No properties found for this agent.</p>#}
-{#	{% endif %}#}
-{##}
-{##}
-{##}
-{#		{%if user.id == agent.id %}#}
-{#		<h1>Successful deal {{ num_deals }}</h1>#}
-{#		<p>Clients:</p>#}
-{#	{% for area in agent.areas.all %}#}
-{#		{% for client in area.clients.all %}#}
-{#			<p>{{ client.first_name }}</p>#}
-{#			<p>{{ client.last_name }}</p>#}
-{#			<p>{{ client.email }}</p>#}
-{#			<p>{{ client.additional_info }}</p>#}
-{#			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>#}
-{#				<br>#}
-{##}
-{#		{% endfor %}#}
-{##}
-{##}
-{#	{% endfor %}#}
-{#	{% endif %}#}
-{#{% endblock %}#}
-
 {% extends "base.html" %}
 {% load static %}
 {% block title %} Profile {% endblock title %}
@@ -99,12 +67,6 @@
 		<h1>Successful deal {{ num_deals }}</h1>
 	{% for area in agent.areas.all %}
 		{% for client in area.clients.all %}
-{#			<p>{{ client.first_name }}</p>#}
-{#			<p>{{ client.last_name }}</p>#}
-{#			<p>{{ client.email }}</p>#}
-{#			<p>{{ client.additional_info }}</p>#}
-{#			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>#}
-{#				<br>#}
               <ul class="list-group">
                 <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
                   <div class="d-flex flex-column">
@@ -117,8 +79,6 @@
 	                  <span class="text-xs"><span class="text-dark ms-sm-2 font-weight-bold">{{ client.additional_info }}</span></span>
                   </div>
                   <div class="ms-auto text-end">
-	                  {#			<p><a href="{% url "agency:client-update" pk=client.pk%}">Edit</a></p>#}
-{#                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="{% url "agency:client-update" pk=client.pk%}"></a>Add comment</a>#}
                     <a class="btn btn-link text-dark px-3 mb-0" href="{% url "agency:client-update" pk=client.pk%}">Add comment</a>
                   </div>
                 </li>

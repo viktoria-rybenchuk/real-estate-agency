@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.template.defaulttags import url
 from django.urls import reverse
 
 PROPERTY_TYPE_CHOICES = (
@@ -15,15 +16,19 @@ class Agent(AbstractUser):
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> url:
         return reverse("agency:agent-detail", kwargs={"pk": self.pk})
+
+
 class Deal(models.Model):
     deal = models.CharField(max_length=63)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, blank=False)
     date = models.DateField(auto_now_add=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.deal} {self.agent} {self.date}"
+
+
 class Area(models.Model):
     name = models.CharField(max_length=60)
     agent = models.ForeignKey(
@@ -39,6 +44,7 @@ class Area(models.Model):
                 fields=["name"], name="unique_name_of_area"
             )
         ]
+
     def __str__(self) -> str:
         return self.name
 

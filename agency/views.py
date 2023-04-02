@@ -2,12 +2,30 @@ from django.db.models import QuerySet, Count
 from django.db.models.functions import TruncMonth
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.template.defaulttags import url
 from django.urls import reverse_lazy, reverse
 from django.utils.datetime_safe import datetime
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView
+)
 
-from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm, AgentSearchForm
-from agency.models import Agent, Property, Client, Area, Deal
+from agency.forms import (
+    PropertySearchForm,
+    AgentCreationForm,
+    ClientCreationForm,
+    ClientUpdateForm,
+    AgentSearchForm
+)
+from agency.models import (
+    Agent,
+    Property,
+    Client,
+    Area,
+    Deal
+)
 
 MONTHS = {
     1: "Jan",
@@ -104,7 +122,7 @@ class AgentListView(ListView):
 class AgentDetailView(DetailView):
     model = Agent
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs) -> dict:
         agent = Agent.objects.get(id=self.request.user.id)
         context = super().get_context_data(**kwargs)
         deal = self.request.GET.get("num_deals", 0)
@@ -145,18 +163,7 @@ class AgentCreateView(CreateView):
     success_url = reverse_lazy("agency:agent-list")
 
 
-class AreaListView(ListView):
-    model = Area
 
-
-# def succesfful_deal(pk):
-#     agent = Agent.objects.get(id=pk)
-#     counter = agent.areas.filter(clients__is_searching_for_property=False).count()
-#     for area in agent.areas.all():
-#         clients = area.clients.filter(is_searching_for_property=False)
-#         area.clients.remove(*clients)
-#     return counter
-#
 class ClientCreateView(CreateView):
     model = Client
     form_class = ClientCreationForm
@@ -168,6 +175,6 @@ class ClientUpdateView(UpdateView):
     form_class = ClientUpdateForm
     template_name = "agency/agent_form.html"
 
-    def get_success_url(self):
+    def get_success_url(self) -> url:
         agent = self.request.user
         return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
