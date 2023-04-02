@@ -6,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm
+from agency.forms import PropertySearchForm, AgentCreationForm, ClientCreationForm, ClientUpdateForm, AgentSearchForm
 from agency.models import Agent, Property, Client, Area, Deal
 
 MONTHS = {
@@ -84,8 +84,22 @@ def index(request: HttpRequest) -> HttpResponse:
 
 class AgentListView(ListView):
     model = Agent
+    queryset = Agent.objects.all()
     paginate_by = 10
 
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(AgentListView, self).get_context_data(**kwargs)
+        last_name = self.request.GET.get("last_name", "")
+        context["search_form"] = AgentSearchForm(initial={"last_name": last_name})
+        return context
+
+    def get_queryset(self) -> QuerySet:
+        form = AgentSearchForm(self.request.GET)
+        if form.is_valid():
+            return self.queryset.filter(
+                last_name__icontains=form.cleaned_data["last_name"]
+            )
+        return self.queryset
 
 class AgentDetailView(DetailView):
     model = Agent

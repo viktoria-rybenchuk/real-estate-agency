@@ -1,16 +1,8 @@
-{#{% extends "base.html" %}#}
-{#{% block content %}#}
-{#	<a href="{% url 'agency:agent-create' %}">Create</a>#}
-{#	{% for agent in agent_list %}#}
-{#		<a href="{% url 'agency:agent-detail' pk=agent.pk%}">{{ agent.id }}</a>#}
-{#		<p>{{ agent.first_name }} {{ agent.last_name }} {{ agent.email }}</p>#}
-{#	{% endfor %}#}
-{#{% endblock %}#}
-
-
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
 
+
+{% block content %}
 
 {% block navigation %}
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
@@ -39,7 +31,6 @@
 
 
 {% endblock %}
-{% block content %}
 		<button type="button" class="btn btn-outline-primary btn-sm mb-0 "><a href="{% url 'agency:agent-create' %}">Add new agent</a></button>
 	<div class="container-fluid py-4">
       <div class="row">

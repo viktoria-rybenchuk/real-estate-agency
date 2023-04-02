@@ -30,7 +30,14 @@ class PropertySearchForm(forms.Form):
                                {"placeholder": "Search by title"})
     )
 
-
+class AgentSearchForm(forms.Form):
+    last_name = forms.CharField(
+        max_length=60,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs=
+                               {"placeholder": "Search by last name"})
+    )
 class ClientCreationForm(forms.ModelForm):
     phone_number = forms.CharField(
         max_length=20,
