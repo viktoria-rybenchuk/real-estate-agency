@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet, Count
 from django.db.models.functions import TruncMonth
 from django.http import HttpRequest, HttpResponse
@@ -77,6 +79,7 @@ def get_best_worker_of_month() -> dict:
     }
 
 
+@login_required
 def index(request: HttpRequest) -> HttpResponse:
     monthly_deals = get_deals_per_month().get("count_deals")
     month = get_deals_per_month()["month"]
@@ -100,10 +103,10 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "agency/index.html", context)
 
 
-class AgentListView(ListView):
+class AgentListView(LoginRequiredMixin, ListView):
     model = Agent
     queryset = Agent.objects.all()
-    paginate_by = 10
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(AgentListView, self).get_context_data(**kwargs)
@@ -119,7 +122,8 @@ class AgentListView(ListView):
             )
         return self.queryset
 
-class AgentDetailView(DetailView):
+
+class AgentDetailView(LoginRequiredMixin, DetailView):
     model = Agent
 
     def get_context_data(self, **kwargs) -> dict:
@@ -133,10 +137,10 @@ class AgentDetailView(DetailView):
         return context
 
 
-class PropertyListView(ListView):
+class PropertyListView(LoginRequiredMixin, ListView):
     model = Property
     queryset = Property.objects.select_related("area")
-    paginate_by = 10
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
@@ -153,24 +157,23 @@ class PropertyListView(ListView):
         return self.queryset
 
 
-class PropertyDetail(DetailView):
+class PropertyDetail(LoginRequiredMixin, DetailView):
     model = Property
 
 
-class AgentCreateView(CreateView):
+class AgentCreateView(LoginRequiredMixin, CreateView):
     model = Agent
     form_class = AgentCreationForm
     success_url = reverse_lazy("agency:agent-list")
 
 
-
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientCreationForm
     success_url = reverse_lazy("agency:index")
 
 
-class ClientUpdateView(UpdateView):
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientUpdateForm
     template_name = "agency/agent_form.html"

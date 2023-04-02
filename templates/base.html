@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,6 +10,13 @@
     <link rel="icon" type="image/png" href="{% static 'img/main.png' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <style>
+      body {
+        background-image: url("{% static 'img/back.png' %}");
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
   </head>
   <body class="g-sidenav-show bg-gray-200">
     {% include "includes/sidebar.html" %}
@@ -23,3 +31,4 @@
     {% include "includes/footer.html" %}
   </body>
 </html>
+
