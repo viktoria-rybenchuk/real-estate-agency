@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center vh-100 fixed">
+  <div class="card my-4 border border-dark">
+    <div class="card-header bg-gradient-primary  text-white text-center">
+      <h6 class="text-capitalize" style="color: white">Add new client</h6>
+    </div>
+    <div class="card-body px-0 pb-2">
+      <div class="table-responsive">
+        <form action="" method="post" class="p-3">
+          {% csrf_token %}
+          {{ form|crispy}}
+          <div class="d-grid gap-2 mt-3">
+            <input type="submit" value="Confirm" class="btn btn-primary btn-lg">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
