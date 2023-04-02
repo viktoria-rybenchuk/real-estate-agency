@@ -1,13 +1,9 @@
 {% extends "base.html" %}
 
-
-{% load i18n static %}
-
 {% block title %} Home {% endblock title %}
 
 {% block content %}
 	<div class="container-fluid py-4">
-
       <div class="row">
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
@@ -80,6 +76,7 @@
       </div>
 		<br>
 		<br>
+	</div>
 	<div class="container-fluid py-4">
 		<div class="text-center">
     <h3 class="mb-0">Monthly Deal Performance for {{ current_year }}</h3>
@@ -98,15 +95,10 @@
     </div>
   </div>
 </div>
-	</div>
-
-
       {% include 'includes/footer.html' %}
-
 
 {% endblock content %}
 
 {% block scripts %}
-
 {% include "includes/script.html" %}
 {% endblock scripts %}
