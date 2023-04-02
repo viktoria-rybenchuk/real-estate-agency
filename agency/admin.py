@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from agency.models import Agent, Area, Property, Client
+from agency.models import Agent, Area, Property, Client, Deal
 
 
 @admin.register(Agent)
@@ -26,3 +26,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name")
     search_fields = ("last_name",)
     filter = ("is_searching_for_property",)
+
+@admin.register(Deal)
+class DealAdmin(admin.ModelAdmin):
+    filter =("-date")

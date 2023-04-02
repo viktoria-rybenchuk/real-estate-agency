@@ -20,7 +20,7 @@ class Agent(AbstractUser):
 class Deal(models.Model):
     deal = models.CharField(max_length=63)
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE, blank=False)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=False)
 
     def __str__(self):
         return f"{self.deal} {self.agent} {self.date}"

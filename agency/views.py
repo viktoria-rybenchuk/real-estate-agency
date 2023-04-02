@@ -1,9 +1,7 @@
-import json
-
-from django.db.models import QuerySet, Count, Sum
-from django.db.models.functions import TruncMonth, ExtractMonth
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.db.models import QuerySet, Count
+from django.db.models.functions import TruncMonth
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.utils.datetime_safe import datetime
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
@@ -29,7 +27,6 @@ MONTHS = {
 CURRENT_YEAR = datetime.now().year
 
 
-#
 def get_deals_per_month() -> dict:
     deals = Deal.objects.filter(date__year=CURRENT_YEAR).annotate(
         month=TruncMonth("date")
@@ -46,17 +43,36 @@ def get_deals_per_month() -> dict:
     return data
 
 
-print(get_deals_per_month())
+def get_best_worker_of_month():
+    previous_month = datetime.now().month - 1
+    max_result = Deal.objects.filter(
+        date__month=previous_month).values(
+        "agent").annotate(
+        count_deal=Count("deal")).order_by(
+        "-count_deal").first()
+    agent_id = max_result["agent"]
+    agent = Agent.objects.get(id=agent_id)
+    full_name_worker = f"{agent.first_name} {agent.last_name}"
+    return {
+        "agent": full_name_worker,
+        "max_deals":  max_result["count_deal"]
+    }
+
+print(get_best_worker_of_month())
 
 
 def index(request: HttpRequest) -> HttpResponse:
     monthly_deals = get_deals_per_month().get("count_deals")
     month = get_deals_per_month()["month"]
+    best_worker = get_best_worker_of_month().get("agent")
+    max_deals = get_best_worker_of_month().get("max_deals")
     count_area = Area.objects.count()
     count_agent = Agent.objects.count()
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
     context = {
+        "best_worker": best_worker,
+        "max_deals": max_deals,
         "month": month,
         "monthly_deals": monthly_deals,
         "current_year": CURRENT_YEAR,
