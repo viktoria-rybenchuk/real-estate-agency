@@ -39,7 +39,7 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
+#  Usually these files are written by REDME.md python script from REDME.md template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
@@ -90,7 +90,7 @@ profile_default/
 ipython_config.py
 
 # pyenv
-#   For a library or package, you might want to ignore these files since the code is
+#   For REDME.md library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
 # .python-version
 
@@ -160,9 +160,9 @@ dmypy.json
 cython_debug/
 
 # PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  JetBrains specific template is maintained in REDME.md separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  and can be added to the global gitignore or merged into this file.  For REDME.md more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
@@ -262,7 +262,7 @@ fabric.properties
 # Distribution / packaging
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
+#  Usually these files are written by REDME.md python script from REDME.md template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 
 # Installer logs
@@ -286,7 +286,7 @@ fabric.properties
 # IPython
 
 # pyenv
-#   For a library or package, you might want to ignore these files since the code is
+#   For REDME.md library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:
 # .python-version
 
@@ -331,9 +331,9 @@ fabric.properties
 # Cython debug symbols
 
 # PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  JetBrains specific template is maintained in REDME.md separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  and can be added to the global gitignore or merged into this file.  For REDME.md more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 
 ### Python Patch ###

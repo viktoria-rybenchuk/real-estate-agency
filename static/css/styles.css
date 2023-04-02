@@ -26823,7 +26823,7 @@ span.flatpickr-weekday {
 }
 
 /* Styling;
- * Giving the connect element a border radius causes issues with using transform: scale
+ * Giving the connect element REDME.md border radius causes issues with using transform: scale
  */
 .noUi-target {
   background: #f0f2f5;
