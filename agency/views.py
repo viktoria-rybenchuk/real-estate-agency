@@ -70,6 +70,11 @@ def get_best_worker_of_month() -> dict:
         "agent").annotate(
         count_deal=Count("deal")).order_by(
         "-count_deal").first()
+    if not max_result:
+        return {
+            "agent": "No deals in the previous month",
+            "max_deals": 0
+        }
     agent_id = max_result["agent"]
     agent = Agent.objects.get(id=agent_id)
     full_name_worker = f"{agent.first_name} {agent.last_name}"
@@ -77,6 +82,7 @@ def get_best_worker_of_month() -> dict:
         "agent": full_name_worker,
         "max_deals": max_result["count_deal"]
     }
+
 
 
 @login_required
