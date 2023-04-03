@@ -1,10 +1,11 @@
-.btn-prime {
+.prime {
   --bs-btn-color: #fff;
   --bs-btn-bg: rgba(159, 70, 0, 0.3);
   --bs-btn-border-color: rgba(86, 38, 3, 0.91);
   --bs-btn-hover-color: #fff;
   --bs-btn-hover-bg: rgba(255, 159, 86, 0.3);
 }
+
 .btn-outline-prime {
   --bs-btn-color: rgba(91, 55, 3, 0.8);
   --bs-btn-border-color: #d54a02;
