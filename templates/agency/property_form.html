@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border border-dark">
+        <div class="card-header bg-gradient-primary text-white text-center">
+          <h6 class="text-capitalize">Add new new property</h6>
+        </div>
+        <div class="card-body p-4">
+          <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy}}
+            <div class="d-grid gap-2 mt-3">
+              <input type="submit" value="Confirm" class="btn btn-dark btn-lg">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

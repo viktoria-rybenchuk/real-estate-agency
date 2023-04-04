@@ -19,7 +19,7 @@ from agency.forms import (
     AgentCreationForm,
     ClientCreationForm,
     ClientUpdateForm,
-    AgentSearchForm
+    AgentSearchForm, PropertyCreationForm
 )
 from agency.models import (
     Agent,
@@ -82,7 +82,6 @@ def get_best_worker_of_month() -> dict:
         "agent": full_name_worker,
         "max_deals": max_result["count_deal"]
     }
-
 
 
 @login_required
@@ -177,6 +176,12 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientCreationForm
     success_url = reverse_lazy("agency:index")
+
+
+class PropertyCreateView(LoginRequiredMixin, CreateView):
+    model = Property
+    form_class = PropertyCreationForm
+    success_url = reverse_lazy("agency:property_list")
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):

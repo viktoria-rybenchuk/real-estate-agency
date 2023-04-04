@@ -37,6 +37,12 @@ urlpatterns = [
         name="property-detail"
     ),
     path(
+        "properties/create/",
+        ClientCreateView.as_view(),
+        name="property-create"
+    ),
+
+    path(
         "clients/create/",
         ClientCreateView.as_view(),
         name="client-create"

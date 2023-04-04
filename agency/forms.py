@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 
-from agency.models import Agent, Client
+from agency.models import Agent, Client, Property
 
 PHONE_CODE_COUNTRY = "+44"
 LENGH_PHONE_NUMBER = 11
@@ -12,6 +12,11 @@ class AgentCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Agent
         fields = ("username", "first_name", "last_name", "email")
+
+
+class PropertyCreationForm(forms.ModelForm):
+    model = Property
+    fields = "__all__"
 
 
 class ClientUpdateForm(forms.ModelForm):
