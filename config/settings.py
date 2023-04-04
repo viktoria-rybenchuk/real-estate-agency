@@ -28,7 +28,9 @@ DEBUG = 'RENDER' not in os.environ
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1",
+                 "https://real-estate-agency.onrender.com"
+                 ]
 
 
 # Application definition
