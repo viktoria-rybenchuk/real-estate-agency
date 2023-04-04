@@ -9,6 +9,10 @@
 				<p><strong>Address:</strong> <span class="text-muted">{{ property.address }}</span></p>
 				<p><strong>Area:</strong> <span class="text-muted">{{ property.area }}</span></p>
 				<p><strong>Description:</strong> <span class="text-muted">{{ property.description }}</span></p>
+				<button type="button" class="btn btn-flat large btn-dark">
+					<a href="{% url 'agency:property-update' pk=property.id %}" class="text-white">Update</a>
+				</button>
+
 			</div>
 		</div>
 	</div>

@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-center align-items-center vh-100 fixed">
   <div class="card my-4 border border-dark">
     <div class="card-header bg-gradient-primary  text-white text-center">
-      <h6 class="text-capitalize" style="color: white">Add</h6>
+      <h6 class="text-capitalize" style="color: white">{{ object|yesno:"Update,Create" }} Agent</h6>
     </div>
     <div class="card-body px-0 pb-2">
       <div class="table-responsive">

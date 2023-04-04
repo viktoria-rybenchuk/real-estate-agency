@@ -184,6 +184,16 @@ class PropertyCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("agency:property_list")
 
 
+class PropertyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Property
+    form_class = PropertyCreationForm
+    template_name = "agency/property_form.html"
+
+    def get_success_url(self) -> url:
+        agent = self.request.user
+        return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
+
+
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientUpdateForm

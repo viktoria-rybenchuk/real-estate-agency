@@ -7,7 +7,7 @@ from agency.views import (
     PropertyListView,
     PropertyDetail,
     AgentCreateView,
-    ClientCreateView, ClientUpdateView, PropertyCreateView
+    ClientCreateView, ClientUpdateView, PropertyCreateView, PropertyUpdateView
 )
 
 urlpatterns = [
@@ -40,6 +40,11 @@ urlpatterns = [
         "properties/create/",
         PropertyCreateView.as_view(),
         name="property-create"
+    ),
+    path(
+        "properties/<int:pk>/update/",
+        PropertyUpdateView.as_view(),
+        name="property-update"
     ),
 
     path(
