@@ -15,8 +15,9 @@ class AgentCreationForm(UserCreationForm):
 
 
 class PropertyCreationForm(forms.ModelForm):
-    model = Property
-    fields = "__all__"
+    class Meta:
+        model = Property
+        fields = "__all__"
 
 
 class ClientUpdateForm(forms.ModelForm):
