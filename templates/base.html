@@ -22,17 +22,19 @@
       }
     </style>
   </head>
-  <body class="g-sidenav-show bg-gray-200">
+  <body class="d-flex flex-column min-vh-100 m-3 p-4">
     {% include "includes/sidebar.html" %}
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
       {% block content %}{% endblock %}
        {% block pagination %}
 	       {% include "includes/pagination.html" %}
        {% endblock %}
+	    <br>
+    {% include "includes/footer.html" %}
     </main>
     {% include 'includes/scripts.html' %}
     {% block scripts %}{% endblock %}
-    {% include "includes/footer.html" %}
+    <br>
   </body>
 </html>
 
