@@ -12,13 +12,13 @@
                 <i class="material-icons opacity-10">person</i>
               </div>
               <div class="text-end pt-1">
-                <p class="text-sm mb-0 text-capitalize">The best worker of month</p>
-                <h4 class="mb-0">{{ best_worker }}</h4>
+                <p class="text-sm mb-0 text-capitalize">Best worker</p>
+                <h5 class="mb-0">{{ best_worker }}</h5>
               </div>
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">Persistence pays off</span></p>
+              <p class="mb-0"><span class="text-secondary text-sm font-weight-bolder">Persistence pays off</span></p>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">We helped  {{ clients_found_home }} to find homes</span></p>
+              <p class="mb-0"><span class="text-secondary text-sm font-weight-bolder">{{ clients_found_home }} satisfied customers</span></p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder"> We work in {{ count_area }} areas  our city</span></p>
+              <p class="mb-0"><span class="text-secondary text-sm font-weight-bolder"> We work in {{ count_area }} areas  our city</span></p>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@
             </div>
             <hr class="dark horizontal my-0">
             <div class="card-footer p-3">
-              <p class="mb-0"><span class="text-success text-sm font-weight-bolder">We have a lot of work </span></p>
+              <p class="mb-0"><span class="text-secondary text-sm font-weight-bolder">We have a lot of work </span></p>
             </div>
           </div>
         </div>
@@ -79,8 +79,9 @@
 	</div>
 	<div class="container-fluid py-4">
 		<div class="text-center">
-    <h3 class="mb-0">Monthly Deal Performance for {{ current_year }}</h3>
+    <h3 class="mb-0">Monthly Deal Performance</h3>
   </div>
+		<br>
   <div class="row justify-content-center">
     <div class="col-lg-8 col-md-6 mt-14 mb-lg-4 mx-auto">
       <div class="card z-index-2" style="height: 600px; padding: 20px;">
@@ -90,6 +91,7 @@
               <canvas id="chart-bars" class="chart-canvas" height="400"></canvas>
             </div>
           </div>
+	        <h6 class="text-center">Sales trend over {{ current_year }} year</h6>
         </div>
       </div>
     </div>

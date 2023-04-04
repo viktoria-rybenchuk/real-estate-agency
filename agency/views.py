@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet, Count
 from django.db.models.functions import TruncMonth
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.template.defaulttags import url
 from django.urls import reverse_lazy, reverse
 from django.utils.datetime_safe import datetime
@@ -19,7 +19,7 @@ from agency.forms import (
     AgentCreationForm,
     ClientCreationForm,
     ClientUpdateForm,
-    AgentSearchForm, PropertyCreationForm
+    AgentSearchForm, PropertyCreationForm, AreaCreationForm
 )
 from agency.models import (
     Agent,
@@ -191,7 +191,9 @@ class PropertyUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self) -> url:
         agent = self.request.user
-        return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
+        return reverse(
+            "agency:agent-detail", kwargs={"pk": agent.pk}
+        )
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
@@ -201,4 +203,27 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self) -> url:
         agent = self.request.user
-        return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
+        return reverse(
+            "agency:agent-detail", kwargs={"pk": agent.pk}
+        )
+
+
+class AreaCreateView(LoginRequiredMixin, CreateView):
+    model = Area
+    form_class = AreaCreationForm
+    success_url = reverse_lazy("agency:index")
+
+
+def is_looking_for_house(
+        request: HttpRequest,
+        pk: int
+) -> HttpResponseRedirect:
+    client = get_object_or_404(Client, pk=pk)
+    if client.is_searching_for_property is True:
+        client.is_searching_for_property = False
+        client.save()
+    return HttpResponseRedirect(
+        reverse_lazy(
+            "agency:agent-detail", args=[request.user.id]
+        )
+    )

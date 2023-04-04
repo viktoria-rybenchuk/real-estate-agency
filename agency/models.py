@@ -78,6 +78,7 @@ class Property(models.Model):
         verbose_name_plural = "properties"
         verbose_name = "property"
 
+
     def __str__(self) -> str:
         return self.title
 
