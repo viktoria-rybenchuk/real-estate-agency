@@ -197,7 +197,7 @@ class PropertyUpdateView(LoginRequiredMixin, UpdateView):
 class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientUpdateForm
-    template_name = "agency/agent_form.html"
+    template_name = "agency/client_form.html"
 
     def get_success_url(self) -> url:
         agent = self.request.user
