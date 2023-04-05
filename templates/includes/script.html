@@ -1,3 +1,10 @@
+  {% load static %}
+  <script src="{% static 'js/core/popper.min.js' %}"></script>
+  <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+  <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+  <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+
 <script>
 		var month = {{ month|safe }};
 
@@ -12,9 +19,9 @@
           tension: 0,
           borderWidth: 0,
           pointRadius: 5,
-          pointBackgroundColor: "rgba(255, 255, 255, .8)",
+          pointBackgroundColor: "rgba(19,19,19,0.8)",
           pointBorderColor: "transparent",
-          borderColor: "rgba(255, 255, 255, .8)",
+          borderColor: "rgba(253,135,44,0.88)",
           borderWidth: 4,
           backgroundColor: "transparent",
           fill: true,
@@ -48,7 +55,7 @@
             ticks: {
               display: true,
               padding: 10,
-              color: '#f8f9fa',
+              color: 'rgba(14,14,15,0.8)',
               font: {
                 size: 14,
                 weight: 300,
@@ -68,7 +75,7 @@
             },
             ticks: {
               display: true,
-              color: '#f8f9fa',
+              color: 'rgba(14,14,15,0.8)',
               padding: 10,
               font: {
                 size: 14,

@@ -1,6 +1,6 @@
 {% load static %}
 
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark" id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark p-3"  id="sidenav-main">
   <div class="sidenav-header">
     <a class="navbar-brand" href="{% url 'agency:index' %}">
       <img src="{% static 'img/main.png' %}" class="navbar-brand-img h-200" alt="main_logo">
@@ -63,6 +63,14 @@
             <i class="material-icons opacity-10">people</i>
           </div>
           <span class="nav-link-text ms-1">Add new client</span>
+        </a>
+      </li>
+	      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'agency:area-create' %}">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">map</i>
+          </div>
+          <span class="nav-link-text ms-1">Add new area</span>
         </a>
       </li>
       {% else %}

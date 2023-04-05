@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}Material Dashboard{% endblock %}</title>
+    <title>{% block title %}Agency{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'img/main.png' %}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
@@ -20,19 +20,27 @@
         background-size: cover;
         background-position: center;
       }
+      .main-content {
+        flex: 1;
+      }
     </style>
   </head>
-  <body class="g-sidenav-show bg-gray-200">
+  <body class="d-flex flex-column min-vh-100 m-3 p-4">
     {% include "includes/sidebar.html" %}
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
       {% block content %}{% endblock %}
        {% block pagination %}
 	       {% include "includes/pagination.html" %}
        {% endblock %}
-    </main>
-    {% include 'includes/scripts.html' %}
+    {% include 'includes/script.html' %}
     {% block scripts %}{% endblock %}
-    {% include "includes/footer.html" %}
+     </main>
   </body>
+  <footer class="fixed-bottom">
+	  {% block footer %}
+	    {% include "includes/footer.html" %}
+    {% endblock %}
+  </footer>
 </html>
+
 

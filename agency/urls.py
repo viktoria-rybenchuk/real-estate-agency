@@ -7,7 +7,8 @@ from agency.views import (
     PropertyListView,
     PropertyDetail,
     AgentCreateView,
-    ClientCreateView, ClientUpdateView
+    ClientCreateView, ClientUpdateView, PropertyCreateView, PropertyUpdateView, is_looking_for_house, AreaCreateView,
+    AgentUpdateView, PropertyDeleteView
 )
 
 urlpatterns = [
@@ -27,6 +28,11 @@ urlpatterns = [
         name="agent-create"
     ),
     path(
+        "agents/<int:pk>update/",
+        AgentUpdateView.as_view(),
+        name="agent-update"
+    ),
+    path(
         "properties/",
         PropertyListView.as_view(),
         name="property-list"
@@ -37,6 +43,22 @@ urlpatterns = [
         name="property-detail"
     ),
     path(
+        "properties/create/",
+        PropertyCreateView.as_view(),
+        name="property-create"
+    ),
+    path(
+        "properties/<int:pk>/update/",
+        PropertyUpdateView.as_view(),
+        name="property-update"
+    ),
+    path(
+        "properties/<int:pk>/delete/",
+        PropertyDeleteView.as_view(),
+        name="property-delete"
+    ),
+
+    path(
         "clients/create/",
         ClientCreateView.as_view(),
         name="client-create"
@@ -45,7 +67,17 @@ urlpatterns = [
         "clients/<int:pk>/update/",
         ClientUpdateView.as_view(),
         name="client-update"
-    )
+    ),
+    path(
+        "clients/<int:pk>/settled",
+        is_looking_for_house,
+        name="client-settled"
+    ),
+    path(
+        "areas/create/",
+        AreaCreateView.as_view(),
+        name="area-create"
+    ),
 
 ]
 

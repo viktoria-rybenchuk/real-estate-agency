@@ -1,3 +1,7 @@
+body{
+  margin-top: 100px;
+}
+
 .prime {
   --bs-btn-color: #fff;
   --bs-btn-bg: rgba(159, 70, 0, 0.3);

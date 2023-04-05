@@ -18,7 +18,7 @@ class AreaAdmin(admin.ModelAdmin):
 class PropertyAdmin(admin.ModelAdmin):
     filter = ("price", "area",)
     search_fields = ("area",)
-    list_display = ("title", "price", "area",)
+    list_display = ("address", "price", "area",)
 
 
 @admin.register(Client)
@@ -27,6 +27,7 @@ class ClientAdmin(admin.ModelAdmin):
     search_fields = ("last_name",)
     filter = ("is_searching_for_property",)
 
+
 @admin.register(Deal)
 class DealAdmin(admin.ModelAdmin):
-    filter =("-date")
+    filter = ("-date",)

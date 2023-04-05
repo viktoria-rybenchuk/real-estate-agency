@@ -31,6 +31,7 @@
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start work</th>
 											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Detail</th>
+											<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Update</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -62,6 +63,13 @@
 													<div class="text-center">
 														<span class="text-xs font-weight-bold">
 															<a href='{% url "agency:agent-detail" pk=agent.id %}' class="btn btn-outline-dark">Detail</a>
+														</span>
+													</div>
+												</td>
+												<td class="align-middle">
+													<div class="text-center">
+														<span class="text-xs font-weight-bold">
+															<a href='{% url "agency:agent-update" pk=agent.id %}' class="btn btn-outline-dark">Update</a>
 														</span>
 													</div>
 												</td>

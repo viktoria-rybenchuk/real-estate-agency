@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import QuerySet, Count
 from django.db.models.functions import TruncMonth
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 from django.template.defaulttags import url
 from django.urls import reverse_lazy, reverse
 from django.utils.datetime_safe import datetime
@@ -11,7 +11,7 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView, DeleteView
 )
 
 from agency.forms import (
@@ -19,7 +19,7 @@ from agency.forms import (
     AgentCreationForm,
     ClientCreationForm,
     ClientUpdateForm,
-    AgentSearchForm
+    AgentSearchForm, PropertyCreationForm, AreaCreationForm
 )
 from agency.models import (
     Agent,
@@ -72,7 +72,7 @@ def get_best_worker_of_month() -> dict:
         "-count_deal").first()
     if not max_result:
         return {
-            "agent": "No deals in the previous month",
+            "agent": "-",
             "max_deals": 0
         }
     agent_id = max_result["agent"]
@@ -82,7 +82,6 @@ def get_best_worker_of_month() -> dict:
         "agent": full_name_worker,
         "max_deals": max_result["count_deal"]
     }
-
 
 
 @login_required
@@ -145,29 +144,40 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
 
 class PropertyListView(LoginRequiredMixin, ListView):
     model = Property
-    queryset = Property.objects.select_related("area")
+    queryset = Property.objects.select_related(
+        "agent__first_name",
+        "agent_last_name"
+        "agent__email"
+    )
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
-        title = self.request.GET.get("title", "")
-        context["search_form"] = PropertySearchForm(initial={"title": title})
+        address = self.request.GET.get("address", "")
+        context["search_form"] = PropertySearchForm(initial={"address": address})
         return context
 
     def get_queryset(self) -> QuerySet:
         form = PropertySearchForm(self.request.GET)
         if form.is_valid():
             return self.queryset.filter(
-                title__icontains=form.cleaned_data["title"]
+                address__icontains=form.cleaned_data["address"]
             )
         return self.queryset
 
 
 class PropertyDetail(LoginRequiredMixin, DetailView):
     model = Property
+    queryset = Property.objects.prefetch_related("area")
 
 
 class AgentCreateView(LoginRequiredMixin, CreateView):
+    model = Agent
+    form_class = AgentCreationForm
+    success_url = reverse_lazy("agency:agent-list")
+
+
+class AgentUpdateView(LoginRequiredMixin, UpdateView):
     model = Agent
     form_class = AgentCreationForm
     success_url = reverse_lazy("agency:agent-list")
@@ -179,11 +189,58 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("agency:index")
 
 
-class ClientUpdateView(LoginRequiredMixin, UpdateView):
-    model = Client
-    form_class = ClientUpdateForm
-    template_name = "agency/agent_form.html"
+class PropertyCreateView(LoginRequiredMixin, CreateView):
+    model = Property
+    form_class = PropertyCreationForm
+    success_url = reverse_lazy("agency:property-list")
+
+
+class PropertyUpdateView(LoginRequiredMixin, UpdateView):
+    model = Property
+    form_class = PropertyCreationForm
+    template_name = "agency/property_form.html"
 
     def get_success_url(self) -> url:
         agent = self.request.user
-        return reverse("agency:agent-detail", kwargs={"pk": agent.pk})
+        return reverse(
+            "agency:agent-detail", kwargs={"pk": agent.pk}
+        )
+
+
+class PropertyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Property
+    template_name = "agency/property_delete_confirmation.html"
+    success_url = reverse_lazy("agency:property-list")
+
+
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
+    model = Client
+    form_class = ClientUpdateForm
+    template_name = "agency/client_form.html"
+
+    def get_success_url(self) -> url:
+        agent = self.request.user
+        return reverse(
+            "agency:agent-detail", kwargs={"pk": agent.pk}
+        )
+
+
+class AreaCreateView(LoginRequiredMixin, CreateView):
+    model = Area
+    form_class = AreaCreationForm
+    success_url = reverse_lazy("agency:index")
+
+
+def is_looking_for_house(
+        request: HttpRequest,
+        pk: int
+) -> HttpResponseRedirect:
+    client = get_object_or_404(Client, pk=pk)
+    if client.is_searching_for_property is True:
+        client.is_searching_for_property = False
+        client.save()
+    return HttpResponseRedirect(
+        reverse_lazy(
+            "agency:agent-detail", args=[request.user.id]
+        )
+    )
