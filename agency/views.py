@@ -11,7 +11,7 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
-    UpdateView
+    UpdateView, DeleteView
 )
 
 from agency.forms import (
@@ -72,7 +72,7 @@ def get_best_worker_of_month() -> dict:
         "-count_deal").first()
     if not max_result:
         return {
-            "agent": "No deals in the previous month",
+            "agent": "-",
             "max_deals": 0
         }
     agent_id = max_result["agent"]
@@ -144,26 +144,31 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
 
 class PropertyListView(LoginRequiredMixin, ListView):
     model = Property
-    queryset = Property.objects.select_related("area")
+    queryset = Property.objects.select_related(
+        "agent__first_name",
+        "agent_last_name"
+        "agent__email"
+    )
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
-        title = self.request.GET.get("title", "")
-        context["search_form"] = PropertySearchForm(initial={"title": title})
+        address = self.request.GET.get("address", "")
+        context["search_form"] = PropertySearchForm(initial={"address": address})
         return context
 
     def get_queryset(self) -> QuerySet:
         form = PropertySearchForm(self.request.GET)
         if form.is_valid():
             return self.queryset.filter(
-                title__icontains=form.cleaned_data["title"]
+                address__icontains=form.cleaned_data["address"]
             )
         return self.queryset
 
 
 class PropertyDetail(LoginRequiredMixin, DetailView):
     model = Property
+    queryset = Property.objects.prefetch_related("area")
 
 
 class AgentCreateView(LoginRequiredMixin, CreateView):
@@ -200,6 +205,12 @@ class PropertyUpdateView(LoginRequiredMixin, UpdateView):
         return reverse(
             "agency:agent-detail", kwargs={"pk": agent.pk}
         )
+
+
+class PropertyDeleteView(LoginRequiredMixin, DeleteView):
+    model = Property
+    template_name = "agency/property_delete_confirmation.html"
+    success_url = reverse_lazy("agency:property-list")
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):

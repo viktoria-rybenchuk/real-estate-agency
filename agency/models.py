@@ -22,8 +22,12 @@ class Agent(AbstractUser):
 
 class Deal(models.Model):
     deal = models.CharField(max_length=63)
-    agent = models.ForeignKey(Agent, on_delete=models.CASCADE, blank=False)
-    date = models.DateField(auto_now_add=False)
+    date = models.DateField(auto_now_add=True)
+    agent = models.ForeignKey(
+        Agent,
+        on_delete=models.CASCADE,
+        related_name="deals"
+    )
 
     def __str__(self) -> str:
         return f"{self.deal} {self.agent} {self.date}"
@@ -34,7 +38,7 @@ class Area(models.Model):
     agent = models.ForeignKey(
         Agent,
         on_delete=models.CASCADE,
-        related_name="areas", null=True,
+        related_name="areas",
         blank=True
     )
 
@@ -50,10 +54,9 @@ class Area(models.Model):
 
 
 class Property(models.Model):
-    title = models.CharField(max_length=63)
+    address = models.CharField(max_length=63)
     price = models.IntegerField()
-    address = models.CharField(max_length=63, default=True)
-    description = models.TextField()
+    description = models.CharField(max_length=255)
     property_type = models.CharField(
         max_length=60,
         choices=PROPERTY_TYPE_CHOICES
@@ -64,38 +67,42 @@ class Property(models.Model):
         Area,
         on_delete=models.CASCADE,
         related_name="properties",
-        blank=True,
-        null=True
     )
     agent = models.ForeignKey(
         Agent,
         on_delete=models.CASCADE,
         related_name="properties",
         blank=True,
-        null=True)
+    )
 
     class Meta:
         verbose_name_plural = "properties"
         verbose_name = "property"
 
-
     def __str__(self) -> str:
-        return self.title
+        return self.address
 
 
 class Client(models.Model):
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
     email = models.EmailField()
-    phone_number = models.IntegerField()
+    phone_number = models.CharField(max_length=20)
     is_searching_for_property = models.BooleanField()
+    additional_info = models.CharField(max_length=255, blank=True)
     search_area = models.ForeignKey(
         Area,
         on_delete=models.CASCADE,
         related_name="clients",
-        null=True
     )
-    additional_info = models.TextField(blank=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["email", "phone_number"],
+                name="unique_email_and_phone_number"
+            )
+        ]
 
     def __str__(self) -> str:
         return f"{self.first_name} {self.last_name}"

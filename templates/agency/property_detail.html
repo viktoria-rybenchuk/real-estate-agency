@@ -44,6 +44,12 @@
 											{{ property.agent.first_name }} {{ property.agent.last_name }}</li>
 										<li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ property.agent.email }}</li>
 									</ul>
+									{% if property.agent.id == user.id %}
+										<hr class="horizontal gray-light my-4">
+										<li class="list-group-item border-0 ps-0 pt-0 text-sm"><p><a class="btn btn-dark text-white px-3 mb-0" href="{% url "agency:property-update" pk=property.pk%}">Update</a></p>
+										<p><li class="list-group-item border-0 ps-0 pt-0 text-sm"><p><a class="btn btn-danger text-white px-3 mb-0" href="{% url "agency:property-delete" pk=property.pk%}">Delete</a></p></p>
+										</li>
+									{% endif %}
 								</div>
 							</div>
 						</div>

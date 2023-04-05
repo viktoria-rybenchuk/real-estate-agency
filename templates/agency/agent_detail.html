@@ -70,17 +70,23 @@
 								<li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
 									<div class="d-flex flex-column">
 										<h6 class="mb-3 text-sm">Client: </h6>
-										<span class="mb-2 text-xs">Full name <span class="text-dark font-weight-bold ms-sm-2">{{ client.first_name }} {{ client.last_name }}</span></span>
-                    <span class="mb-2 text-xs">Email:{{ client.phone_number }}<span class="text-dark ms-sm-2 font-weight-bold">{{ client.email }}</span></span>
-                    <span class="text-xs">Phone: <span class="text-dark ms-sm-2 font-weight-bold">{{ client.phone_number }}</span></span>
+										<span class="mb-2 text-xs">Full name:
+											<span class="text-dark font-weight-bold ms-sm-2">{{ client.first_name }} {{ client.last_name }}</span>
+										</span>
+                    <span class="text-xs">Phone:
+	                    <span class="text-dark ms-sm-2 font-weight-bold">{{ client.phone_number }}</span>
+                    </span>
 	                  <br>
 	                  <h6 class="mb-3 text-sm">Comments: </h6>
-	                  <span class="text-xs"><span class="text-dark ms-sm-2 font-weight-bold">{{ client.additional_info }}</span></span>
+	                  <span class="text-xs">
+		                  <span class="text-dark ms-sm-2 font-weight-bold">{{ client.additional_info }}</span>
+	                  </span>
                   </div>
                   <div class="ms-auto text-end">
-                    <a class="btn btn-outline-dark text-dark px-3 mb-0" href="{% url "agency:client-update" pk=client.pk%}">Add comment</a>
+                    <a class="btn btn-outline-dark text-dark px-3 mb-0" href="{% url "agency:client-update" pk=client.pk%}">Comment</a>
 	                   <div class="ms-auto text-end">
-	                  <p><a class="btn btn-dark text-white px-3 mb-0" href="{% url "agency:client-settled" pk=client.pk%}">Update status</a></p>
+		                   <br>
+	                  <p><a class="btn btn-success text-white px-3 mb-0" href="{% url "agency:client-settled" pk=client.pk%}">Settled</a></p>
                   </div>
                 </li>
 								</ul>
@@ -93,7 +99,6 @@
 			<div class="col-12 mt-4">
 				<div class="mb-5 ps-3">
 					<h6 class="mb-1">Properties</h6>
-					<p class="text-sm">Architects design houses</p>
 				</div>
 				<div class="row">
 					{%if agent.properties.all %}

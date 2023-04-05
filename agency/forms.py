@@ -33,12 +33,12 @@ class ClientUpdateForm(forms.ModelForm):
 
 
 class PropertySearchForm(forms.Form):
-    title = forms.CharField(
+    address = forms.CharField(
         max_length=60,
         required=False,
         label="",
         widget=forms.TextInput(attrs=
-                               {"placeholder": "Search by title"})
+                               {"placeholder": "Search by address"})
     )
 
 
@@ -56,13 +56,13 @@ class ClientCreationForm(forms.ModelForm):
     phone_number = forms.CharField(
         max_length=20,
         widget=forms.TextInput(attrs={
-            'placeholder': 'Phone number'}
+            "placeholder": "Phone number"}
         )
     )
 
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.fields['phone_number'].initial = PHONE_CODE_COUNTRY
+        self.fields["phone_number"].initial = PHONE_CODE_COUNTRY
 
     class Meta:
         model = Client
@@ -79,9 +79,12 @@ def validate_phone_number(phone_number: str) -> str:
             f"Phone number should consist phone "
             f"code of country {PHONE_CODE_COUNTRY}"
         )
-    if len(phone_number)[1:] != LENGH_PHONE_NUMBER:
-        raise ValidationError(f"Phone number should consist {LENGH_PHONE_NUMBER} numbers."
-                              f"You have {phone_number} numbers")
-    elif not phone_number[1:].isdigit():
+    if len(phone_number[3:]) != LENGH_PHONE_NUMBER:
+        raise ValidationError(f"Phone number should consist {LENGH_PHONE_NUMBER} numbers")
+    if not phone_number[1:].isdigit():
         raise ValidationError("Phone number should consist digit")
-    return phone_number
+    formatted_number = "{0} ({1}) {2} {3}".format(
+        phone_number[:3], (phone_number[3:6]),
+        phone_number[6:10], phone_number[10:]
+    )
+    return formatted_number
