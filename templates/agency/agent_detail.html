@@ -14,7 +14,7 @@
 				<div class="col-auto my-auto">
 					<div class="h-100">
 						<h5 class="mb-1"> {{ agent.first_name }} {{ agent.last_name }}</h5>
-						<p class="mb-0 font-weight-normal text-sm">
+						<p class="mb-0 font-weight-normal text-lg">
 							Agent
 						</p>
 					</div>
@@ -60,7 +60,7 @@
 					{%if user.id == agent.id %}
 						<div class="text-center">
 							<row>
-									<h1>Successful deal: <p class="text-success">{{ num_deals }}</p></h1>
+									<h3>Successful deal: <p class="text-success">{{ num_deals }}</p></h3>
 							</row>
 						</div>
 						{% for area in agent.areas.all %}

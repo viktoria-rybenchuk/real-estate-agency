@@ -79,8 +79,9 @@ def validate_phone_number(phone_number: str) -> str:
             f"Phone number should consist phone "
             f"code of country {PHONE_CODE_COUNTRY}"
         )
-    if len(phone_number) != LENGH_PHONE_NUMBER:
-        raise ValidationError(f"Phone number should consist {LENGH_PHONE_NUMBER} numbers")
+    if len(phone_number)[1:] != LENGH_PHONE_NUMBER:
+        raise ValidationError(f"Phone number should consist {LENGH_PHONE_NUMBER} numbers."
+                              f"You have {phone_number} numbers")
     elif not phone_number[1:].isdigit():
         raise ValidationError("Phone number should consist digit")
     return phone_number

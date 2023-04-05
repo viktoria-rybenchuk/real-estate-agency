@@ -172,6 +172,12 @@ class AgentCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("agency:agent-list")
 
 
+class AgentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Agent
+    form_class = AgentCreationForm
+    success_url = reverse_lazy("agency:agent-list")
+
+
 class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientCreationForm
@@ -181,7 +187,7 @@ class ClientCreateView(LoginRequiredMixin, CreateView):
 class PropertyCreateView(LoginRequiredMixin, CreateView):
     model = Property
     form_class = PropertyCreationForm
-    success_url = reverse_lazy("agency:property_list")
+    success_url = reverse_lazy("agency:property-list")
 
 
 class PropertyUpdateView(LoginRequiredMixin, UpdateView):
