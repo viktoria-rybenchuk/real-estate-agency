@@ -21,7 +21,7 @@ class Agent(AbstractUser):
 
 
 class Deal(models.Model):
-    deal = models.CharField(max_length=63)
+    deal = models.CharField(max_length=63, blank=True)
     date = models.DateField(auto_now_add=True)
     agent = models.ForeignKey(
         Agent,
