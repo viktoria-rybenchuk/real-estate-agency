@@ -36,18 +36,10 @@ class Deal(models.Model):
 class Area(models.Model):
     name = models.CharField(max_length=60)
     agent = models.ForeignKey(
-        Agent,
-        on_delete=models.CASCADE,
-        related_name="areas",
-        blank=True
+        Agent, on_delete=models.SET_NULL,
+        null=True,
+        related_name="areas"
     )
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["name"], name="unique_name_of_area"
-            )
-        ]
 
     def __str__(self) -> str:
         return self.name

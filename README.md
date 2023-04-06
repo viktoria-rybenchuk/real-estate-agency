@@ -13,6 +13,10 @@ pip install -r requirements.txt
 python.manage.py migrate
 python manage.py runserver
 ```
+## Environmental variables
+
+* DJANGO_SECRET_KEY
+* DATABASE_URL
 
 ## Features
 

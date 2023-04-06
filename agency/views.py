@@ -144,6 +144,7 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
 
 class PropertyListView(LoginRequiredMixin, ListView):
     model = Property
+    queryset = Property.objects.all()
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
