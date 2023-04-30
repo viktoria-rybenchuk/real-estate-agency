@@ -19,7 +19,9 @@ from agency.forms import (
     AgentCreationForm,
     ClientCreationForm,
     ClientUpdateForm,
-    AgentSearchForm, PropertyCreationForm, AreaCreationForm
+    AgentSearchForm,
+    PropertyCreationForm,
+    AreaCreationForm
 )
 from agency.models import (
     Agent,
@@ -136,7 +138,9 @@ class AgentDetailView(LoginRequiredMixin, DetailView):
         agent = Agent.objects.get(id=self.request.user.id)
         context = super().get_context_data(**kwargs)
         deal = self.request.GET.get("num_deals", 0)
-        counter = agent.areas.filter(clients__is_searching_for_property=False).count()
+        counter = agent.areas.filter(
+            clients__is_searching_for_property=False
+        ).count()
         deal += counter
         context["num_deals"] = deal
 
@@ -151,7 +155,9 @@ class PropertyListView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super(PropertyListView, self).get_context_data(**kwargs)
         address = self.request.GET.get("address", "")
-        context["search_form"] = PropertySearchForm(initial={"address": address})
+        context["search_form"] = PropertySearchForm(
+            initial={"address": address}
+        )
         return context
 
     def get_queryset(self) -> QuerySet:

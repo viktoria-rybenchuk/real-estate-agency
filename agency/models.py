@@ -5,7 +5,8 @@ from django.urls import reverse
 
 
 class Agent(AbstractUser):
-
+    class Meta:
+        ordering = ("last_name", )
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"
 
@@ -68,6 +69,7 @@ class Property(models.Model):
     class Meta:
         verbose_name_plural = "properties"
         verbose_name = "property"
+        ordering = ("created_at", )
 
     def __str__(self) -> str:
         return self.address
