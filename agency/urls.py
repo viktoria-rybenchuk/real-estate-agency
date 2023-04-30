@@ -69,7 +69,7 @@ urlpatterns = [
         name="client-update"
     ),
     path(
-        "clients/<int:pk>/settled",
+        "clients/<int:pk>/settled/",
         is_looking_for_house,
         name="client-settled"
     ),
