@@ -11,7 +11,6 @@ PROPERTY_TYPE_CHOICES = (
 
 
 class Agent(AbstractUser):
-    pass
 
     def __str__(self) -> str:
         return f"{self.username} ({self.first_name} {self.last_name})"

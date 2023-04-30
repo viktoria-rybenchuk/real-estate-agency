@@ -52,13 +52,13 @@ def get_deals_per_month() -> dict:
         month=TruncMonth("date")
     ).values("month").annotate(
         sum=Count("deal")).order_by("month")
-    deal_list = [sum_deal["sum"] for sum_deal in deals]
-    month_list = [
+    deals_list_of_sum = [deal["sum"] for deal in deals]
+    months = [
         MONTHS.get(date.month) for date in deals.values_list("month", flat=True)
     ]
     data = {
-        "month": month_list,
-        "count_deals": deal_list
+        "month": months,
+        "count_deals": deals_list_of_sum
     }
     return data
 
@@ -86,7 +86,7 @@ def get_best_worker_of_month() -> dict:
 
 @login_required
 def index(request: HttpRequest) -> HttpResponse:
-    monthly_deals = get_deals_per_month().get("count_deals")
+    monthly_deals = get_deals_per_month()["count_deals"]
     month = get_deals_per_month()["month"]
     best_worker = get_best_worker_of_month().get("agent")
     max_deals = get_best_worker_of_month().get("max_deals")
@@ -94,7 +94,8 @@ def index(request: HttpRequest) -> HttpResponse:
     clients_found_home = Client.objects.filter(
         is_searching_for_property=False).count()
     active_client = Client.objects.filter(
-        is_searching_for_property=True).count()
+        is_searching_for_property=True
+    ).count()
     context = {
         "best_worker": best_worker,
         "max_deals": max_deals,
