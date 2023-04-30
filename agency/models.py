@@ -3,12 +3,6 @@ from django.db import models
 from django.template.defaulttags import url
 from django.urls import reverse
 
-PROPERTY_TYPE_CHOICES = (
-    ('House', 'House'),
-    ('Apartment', 'Apartment'),
-    ('Townhouse', 'Townhouse'),
-)
-
 
 class Agent(AbstractUser):
 
@@ -20,7 +14,7 @@ class Agent(AbstractUser):
 
 
 class Deal(models.Model):
-    deal = models.CharField(max_length=63)
+    deal = models.CharField(max_length=63, blank=True)
     date = models.DateField(auto_now_add=True)
     agent = models.ForeignKey(
         Agent,
@@ -45,12 +39,17 @@ class Area(models.Model):
 
 
 class Property(models.Model):
+    class PropertyTypeChoices(models.TextChoices):
+        House = "House",
+        Apartment = "Apartment",
+        Townhouse = "Townhouse"
+
     address = models.CharField(max_length=63)
     price = models.IntegerField()
     description = models.CharField(max_length=255)
     property_type = models.CharField(
-        max_length=60,
-        choices=PROPERTY_TYPE_CHOICES
+        max_length=63,
+        choices=PropertyTypeChoices.choices
     )
     is_available = models.BooleanField()
     created_at = models.DateTimeField(auto_now_add=True)

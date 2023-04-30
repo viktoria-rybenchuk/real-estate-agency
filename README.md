@@ -31,10 +31,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Environmental variables
-
-* DJANGO_SECRET_KEY
-* DATABASE_URL
 
 ## Features
 
@@ -43,16 +39,10 @@ python manage.py runserver
 * The search results could include detailed information about each property, such  descriptions, and contact information for the agent responsible for the property. 
 * The platform could then generate a report that shows the overall sales results for each month, displayed in a graphical format such as a bar graph. This report could be accessible to both agents and managers, providing insight into overall performance and allowing for more informed decision-making.
 
-## Website
-[Real Estate Agency Website Link](https://real-agency.onrender.com/)
 
 ## Credentials
-
 To access the system, you will need to enter login credentials:
 ```shell
 Username: user
 Password: user12345
-```
-![alt text](./readme_media/main.png "This is an example screenshot of the website")
-![alt text](./readme_media/user.png)
-![alt text](./readme_media/property.png)
+
