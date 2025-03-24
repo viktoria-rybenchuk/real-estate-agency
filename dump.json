@@ -1,0 +1,20 @@
+[
+{
+    "model": "agency.agent",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$fjGBtk7TjsGzHEu8qvPxN9$lDgIuZHHoe0uSIyqGs7YeO4V2gh+VcOJiqb7RIIVMXo=",
+        "last_login": "2024-04-27T13:32:32.668Z",
+        "is_superuser": true,
+        "username": "user",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-04-27T13:32:15.273Z",
+        "groups": [],
+        "user_permissions": []
+    }
+}
+]
